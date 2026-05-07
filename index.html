@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ABC Stationers – We care for you!</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy: #0A1628;
+    --blue: #1565C0;
+    --sky: #1E88E5;
+    --accent: #FFB300;
+    --white: #FFFFFF;
+    --light: #F0F6FF;
+    --mid: #C5D8F6;
+    --text: #1A2540;
+    --muted: #5A6D8C;
+    --card: #FFFFFF;
+    --radius: 18px;
+    --shadow: 0 8px 40px rgba(21,101,192,0.13);
+    --shadow-hover: 0 16px 56px rgba(21,101,192,0.22);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
+    background: rgba(10,22,40,0.96);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    height: 68px;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px; text-decoration: none;
+  }
+  .logo-icon {
+    width: 42px; height: 42px; background: var(--accent);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-weight: 900; color: var(--navy); font-size: 20px;
+  }
+  .logo-text { color: var(--white); font-weight: 600; font-size: 1.1rem; line-height: 1.2; }
+  .logo-text span { color: var(--accent); }
+
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.78); text-decoration: none; font-size: 0.95rem;
+    font-weight: 500; letter-spacing: 0.02em;
+    transition: color 0.2s;
+    position: relative; padding-bottom: 4px;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 2px; background: var(--accent);
+    transition: width 0.25s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    background: var(--accent); color: var(--navy);
+    font-weight: 600; font-size: 0.88rem; border: none;
+    padding: 10px 22px; border-radius: 50px; cursor: pointer;
+    text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+    white-space: nowrap;
+  }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(255,179,0,0.4); }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 26px; height: 2px; background: white; border-radius: 2px; transition: 0.3s; }
+
+  /* ─── HERO ─── */
+  #home {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--navy) 0%, #0D2856 55%, #1565C0 100%);
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 100px 5% 60px;
+    position: relative; overflow: hidden;
+  }
+  #home::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2l-2 2V0zm0 4l4-4h2l-6 6V4zm0 4l8-8h2L40 10V8zm0 4L52 0h2L40 14v-2zm0 4L56 0h2L40 18v-2zm0 4L60 0h2L40 22v-2zm0 4L64 0h2L40 26v-2zm0 4L68 0h2L40 30v-2zm0 4L72 0h2L40 34v-2zm0 4L76 0h2L40 38v-2zm0 4L80 0v2L42 40h-2zm4 0L80 4v2L46 40h-2zm4 0L80 8v2L50 40h-2zm4 0L80 12v2L54 40h-2zm4 0L80 16v2L58 40h-2zm4 0L80 20v2L62 40h-2zm4 0L80 24v2L66 40h-2zm4 0L80 28v2L70 40h-2zm4 0L80 32v2L74 40h-2zm4 0L80 36v2L78 40h-2zm4 0L80 40v-2h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .floating-shapes {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .shape {
+    position: absolute; border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    animation: float 8s ease-in-out infinite;
+  }
+  .shape:nth-child(1) { width: 300px; height: 300px; top: -80px; right: -80px; animation-delay: 0s; }
+  .shape:nth-child(2) { width: 180px; height: 180px; bottom: 60px; left: -60px; animation-delay: 3s; }
+  .shape:nth-child(3) { width: 120px; height: 120px; top: 40%; left: 10%; animation-delay: 1.5s; }
+  @keyframes float {
+    0%,100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-20px) scale(1.04); }
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,179,0,0.15); border: 1px solid rgba(255,179,0,0.35);
+    color: var(--accent); font-size: 0.8rem; font-weight: 600;
+    padding: 6px 16px; border-radius: 50px; letter-spacing: 0.05em;
+    margin-bottom: 24px; text-transform: uppercase;
+    animation: fadeUp 0.7s ease both;
+  }
+  .hero-badge::before { content: '★'; font-size: 0.7rem; }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    color: var(--white); font-weight: 900; line-height: 1.15;
+    margin-bottom: 20px;
+    animation: fadeUp 0.7s 0.15s ease both;
+  }
+  .hero-title .accent { color: var(--accent); }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: rgba(255,255,255,0.72); max-width: 580px; margin: 0 auto 36px;
+    line-height: 1.7; font-weight: 300;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+
+  .hero-btns {
+    display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.45s ease both;
+  }
+  .btn-primary {
+    background: var(--accent); color: var(--navy);
+    font-weight: 700; font-size: 0.95rem;
+    padding: 14px 30px; border-radius: 50px;
+    text-decoration: none; border: none; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(255,179,0,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(255,179,0,0.45); }
+
+  .btn-secondary {
+    background: transparent; color: var(--white);
+    border: 1.5px solid rgba(255,255,255,0.35);
+    font-weight: 500; font-size: 0.95rem;
+    padding: 13px 28px; border-radius: 50px;
+    text-decoration: none; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.6); }
+
+  .hero-stats {
+    display: flex; gap: 48px; justify-content: center; margin-top: 64px; flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.6s ease both;
+  }
+  .stat { color: var(--white); text-align: center; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--accent); }
+  .stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.55); letter-spacing: 0.05em; text-transform: uppercase; margin-top: 2px; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SECTION BASE ─── */
+  section { padding: 90px 5%; }
+  .section-label {
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--sky); margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 900; line-height: 1.2; color: var(--navy);
+    margin-bottom: 16px;
+  }
+  .section-desc { color: var(--muted); max-width: 560px; line-height: 1.7; font-size: 1rem; }
+
+  /* ─── SERVICES ─── */
+  #services { background: var(--light); }
+  .services-header { text-align: center; margin-bottom: 56px; }
+  .services-header .section-desc { margin: 0 auto; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px; max-width: 1200px; margin: 0 auto;
+  }
+
+  .service-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 32px 24px;
+    border: 1.5px solid rgba(21,101,192,0.1);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    position: relative; overflow: hidden;
+    text-decoration: none; display: block;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--accent));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); border-color: var(--mid); }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .svc-icon {
+    width: 58px; height: 58px; border-radius: 14px;
+    background: linear-gradient(135deg, var(--light), var(--mid));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.7rem; margin-bottom: 18px;
+    transition: transform 0.3s;
+  }
+  .service-card:hover .svc-icon { transform: scale(1.1) rotate(-4deg); }
+
+  .svc-name {
+    font-weight: 700; font-size: 1rem; color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .svc-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.55; }
+
+  .wa-hint {
+    display: inline-flex; align-items: center; gap: 5px;
+    margin-top: 14px; font-size: 0.75rem; color: #25D366; font-weight: 600;
+    opacity: 0; transform: translateY(4px);
+    transition: opacity 0.25s, transform 0.25s;
+  }
+  .wa-hint::before { content: '💬'; }
+  .service-card:hover .wa-hint { opacity: 1; transform: translateY(0); }
+
+  /* ─── WHY US ─── */
+  #why {
+    background: var(--navy);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: center; max-width: 100%;
+    padding: 90px 8%;
+  }
+  #why .section-title { color: var(--white); }
+  #why .section-desc { color: rgba(255,255,255,0.6); }
+  .why-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .pill {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.85); font-size: 0.82rem; font-weight: 500;
+    padding: 8px 16px; border-radius: 50px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .pill::before { content: '✓'; color: var(--accent); font-weight: 700; }
+
+  .why-cards { display: flex; flex-direction: column; gap: 16px; }
+  .why-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px; padding: 22px 24px;
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .why-card-icon { font-size: 1.6rem; flex-shrink: 0; }
+  .why-card-text h4 { color: var(--white); font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
+  .why-card-text p { color: rgba(255,255,255,0.55); font-size: 0.82rem; line-height: 1.5; }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--white); }
+  .contact-wrapper {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start;
+  }
+  .contact-info-block { display: flex; flex-direction: column; gap: 20px; }
+
+  .info-card {
+    background: var(--light);
+    border: 1.5px solid rgba(21,101,192,0.1);
+    border-radius: 14px; padding: 22px 24px;
+    display: flex; gap: 16px; align-items: center;
+    text-decoration: none; color: inherit;
+    transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+  }
+  .info-card:hover {
+    box-shadow: var(--shadow-hover); transform: translateY(-3px);
+    border-color: var(--sky);
+  }
+  .info-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--blue), var(--sky));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; flex-shrink: 0;
+  }
+  .info-label { font-size: 0.75rem; color: var(--muted); font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; }
+  .info-value { font-weight: 600; color: var(--navy); font-size: 0.95rem; margin-top: 2px; }
+  .info-sub { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+  .map-placeholder {
+    background: linear-gradient(135deg, var(--navy) 0%, #1565C0 100%);
+    border-radius: var(--radius); padding: 40px 32px;
+    color: white; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+    min-height: 340px; justify-content: center;
+  }
+  .map-pin { font-size: 3rem; }
+  .map-placeholder h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700;
+  }
+  .map-placeholder p { color: rgba(255,255,255,0.72); font-size: 0.9rem; line-height: 1.6; max-width: 300px; }
+  .map-btn {
+    background: var(--accent); color: var(--navy);
+    font-weight: 700; padding: 12px 24px; border-radius: 50px;
+    text-decoration: none; font-size: 0.9rem;
+    transition: transform 0.2s; display: inline-block; margin-top: 8px;
+  }
+  .map-btn:hover { transform: scale(1.05); }
+
+  /* ─── FLOATING WA BUTTON ─── */
+  .wa-float {
+    position: fixed; bottom: 28px; right: 28px; z-index: 9000;
+    width: 60px; height: 60px; border-radius: 50%;
+    background: #25D366; color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; text-decoration: none;
+    box-shadow: 0 6px 24px rgba(37,211,102,0.5);
+    animation: pulse-wa 2.5s ease-in-out infinite;
+    transition: transform 0.2s;
+  }
+  .wa-float:hover { transform: scale(1.1); }
+  @keyframes pulse-wa {
+    0%,100% { box-shadow: 0 6px 24px rgba(37,211,102,0.5); }
+    50% { box-shadow: 0 6px 40px rgba(37,211,102,0.75); }
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--navy); color: rgba(255,255,255,0.55);
+    text-align: center; padding: 32px 5%;
+    font-size: 0.85rem; line-height: 1.8;
+  }
+  footer strong { color: var(--accent); }
+
+  /* ─── MOBILE NAV ─── */
+  .mobile-menu {
+    display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 998;
+    background: rgba(10,22,40,0.98); backdrop-filter: blur(14px);
+    flex-direction: column; padding: 20px 5%; gap: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    color: rgba(255,255,255,0.8); text-decoration: none;
+    font-size: 1rem; font-weight: 500; padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--accent); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    #why { grid-template-columns: 1fr; gap: 40px; }
+    .contact-wrapper { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .hero-stats { gap: 28px; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 420px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .hero-btns { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">
+    <div class="logo-icon">A</div>
+    <div class="logo-text"><span>ABC</span> Stationers</div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/923009706178?text=Hi!%20I'd%20like%20to%20know%20more%20about%20your%20services." target="_blank" class="nav-cta">📞 Call / WhatsApp</a>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home" onclick="closeMenu()">Home</a>
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+  <a href="https://wa.me/923009706178?text=Hi!%20I'd%20like%20to%20know%20more%20about%20your%20services." target="_blank" onclick="closeMenu()">💬 WhatsApp Us</a>
+</div>
+
+<!-- HERO -->
+<section id="home">
+  <div class="floating-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+  <div>
+    <div class="hero-badge">Established & Trusted in Jhawarian</div>
+    <h1 class="hero-title">
+      ABC Stationers –<br/>
+      <span class="accent">We Care for You!</span>
+    </h1>
+    <p class="hero-sub">
+      Your one-stop destination for printing, photostat, computer services, stationery, and much more — right on Thana Road, Faisal Colony, Jhawarian.
+    </p>
+    <div class="hero-btns">
+      <a href="https://wa.me/923009706178?text=Hi!%20I'd%20like%20to%20know%20more%20about%20your%20services." target="_blank" class="btn-primary">
+        💬 WhatsApp Us
+      </a>
+      <a href="#services" class="btn-secondary">
+        📋 View Services
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">14+</div>
+        <div class="stat-label">Services</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1000s</div>
+        <div class="stat-label">Happy Clients</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">Fast</div>
+        <div class="stat-label">Turnaround</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <div class="section-label">What We Offer</div>
+    <h2 class="section-title">All Services Under One Roof</h2>
+    <p class="section-desc">Click on any service to instantly connect with us on WhatsApp and get a quick response!</p>
+  </div>
+  <div class="services-grid" id="servicesGrid"></div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div>
+    <div class="section-label" style="color:var(--accent)">Why Choose Us</div>
+    <h2 class="section-title">A Trusted Name<br/>in the Community</h2>
+    <p class="section-desc">We've been serving the people of Jhawarian and surrounding areas with dedication, speed, and honest pricing.</p>
+    <div class="why-pills">
+      <div class="pill">Fast Service</div>
+      <div class="pill">Affordable Prices</div>
+      <div class="pill">Friendly Staff</div>
+      <div class="pill">Quality Prints</div>
+      <div class="pill">Urgent Assistance</div>
+      <div class="pill">All-in-One Shop</div>
+    </div>
+  </div>
+  <div class="why-cards">
+    <div class="why-card">
+      <div class="why-card-icon">⚡</div>
+      <div class="why-card-text">
+        <h4>Urgent Documents – Same Day</h4>
+        <p>Need a domicile or stamp urgently? We handle it fast so you never miss a deadline.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-card-icon">🎓</div>
+      <div class="why-card-text">
+        <h4>Computer Academy</h4>
+        <p>Professional training in computer skills for students and job seekers in a hands-on environment.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-card-icon">🤝</div>
+      <div class="why-card-text">
+        <h4>Friendly Customer Deals</h4>
+        <p>We believe in long-term relationships with fair pricing and special deals for loyal customers.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-card-icon">📍</div>
+      <div class="why-card-text">
+        <h4>Conveniently Located</h4>
+        <p>Find us easily on Thana Road, Faisal Colony, Jhawarian — serving locals every day.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div style="text-align:center; margin-bottom:52px;">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title">Contact & Location</h2>
+    <p class="section-desc" style="margin:0 auto;">Reach us by phone, WhatsApp, or visit us in person. We're always happy to help!</p>
+  </div>
+  <div class="contact-wrapper">
+    <div class="contact-info-block">
+
+      <a href="https://wa.me/923026799558?text=Hi!%20I%20would%20like%20to%20inquire%20about%20your%20services." target="_blank" class="info-card">
+        <div class="info-icon">📱</div>
+        <div>
+          <div class="info-label">Sakinder Hayat</div>
+          <div class="info-value">0302-6799558</div>
+          <div class="info-sub">Tap to open WhatsApp</div>
+        </div>
+      </a>
+
+      <a href="https://wa.me/923009706178?text=Hi!%20I%20would%20like%20to%20inquire%20about%20your%20services." target="_blank" class="info-card">
+        <div class="info-icon">📱</div>
+        <div>
+          <div class="info-label">Hafiz M. Nauman</div>
+          <div class="info-value">0300-9706178</div>
+          <div class="info-sub">Tap to open WhatsApp</div>
+        </div>
+      </a>
+
+      <a href="tel:0486009641" class="info-card">
+        <div class="info-icon">☎️</div>
+        <div>
+          <div class="info-label">Landline</div>
+          <div class="info-value">048-6009641</div>
+          <div class="info-sub">Tap to call directly</div>
+        </div>
+      </a>
+
+      <div class="info-card" style="cursor:default;">
+        <div class="info-icon">📍</div>
+        <div>
+          <div class="info-label">Our Address</div>
+          <div class="info-value">Thana Road, Faisal Colony</div>
+          <div class="info-sub">Jhawarian, Punjab, Pakistan</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="map-placeholder">
+      <div class="map-pin">📍</div>
+      <h3>ABC Stationers</h3>
+      <p>Thana Road, Faisal Colony, Jhawarian, Punjab, Pakistan</p>
+      <a href="https://www.google.com/maps/search/ABC+Stationers+Thana+Road+Faisal+Colony+Jhawarian" target="_blank" class="map-btn">
+        🗺️ View on Google Maps
+      </a>
+      <div style="margin-top:16px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+        <a href="https://wa.me/923026799558?text=Hi!%20I%20would%20like%20to%20inquire%20about%20your%20services." target="_blank" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.25);color:white;padding:10px 18px;border-radius:50px;text-decoration:none;font-size:0.85rem;font-weight:500;transition:background 0.2s;">💬 WhatsApp</a>
+        <a href="tel:0486009641" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.25);color:white;padding:10px 18px;border-radius:50px;text-decoration:none;font-size:0.85rem;font-weight:500;transition:background 0.2s;">📞 Call Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>ABC Stationers</strong> – We Care for You!</p>
+  <p>Thana Road, Faisal Colony, Jhawarian | 📞 048-6009641 | 💬 0302-6799558</p>
+  <p style="margin-top:8px; font-size:0.78rem;">© 2025 ABC Stationers. All rights reserved.</p>
+</footer>
+
+<!-- FLOATING WA BUTTON -->
+<a href="https://wa.me/923026799558?text=Hi!%20I'd%20like%20to%20know%20more%20about%20your%20services." target="_blank" class="wa-float" title="Chat on WhatsApp">💬</a>
+
+<script>
+  // ── Services Data ──
+  const services = [
+    { icon: '🖥️', name: 'Computer Academy', desc: 'Professional computer training for students and working professionals.' },
+    { icon: '📄', name: 'Photostat', desc: 'High-quality black & white and color document photocopying.' },
+    { icon: '🎨', name: 'Color Copy', desc: 'Vivid and sharp color copies for presentations, flyers, and more.' },
+    { icon: '⌨️', name: 'Composing', desc: 'Accurate document composing and typing in Urdu & English.' },
+    { icon: '🖨️', name: 'Printing', desc: 'Fast printing services for all document sizes and formats.' },
+    { icon: '🌐', name: 'Internet Services', desc: 'Reliable internet browsing and email assistance.' },
+    { icon: '📚', name: 'Binding', desc: 'Spiral, thermal, and hard binding for books, reports, and theses.' },
+    { icon: '🔍', name: 'Scanning', desc: 'High-resolution document and photo scanning services.' },
+    { icon: '🔒', name: 'Sealing & Lamination', desc: 'Protect and preserve your important documents with lamination.' },
+    { icon: '📋', name: 'Urgent Domicile', desc: 'Quick assistance with domicile certificate applications.' },
+    { icon: '🏷️', name: 'Urgent Stamps', desc: 'Fast rubber stamp making and stamp pad services.' },
+    { icon: '✏️', name: 'Stationery Supplies', desc: 'Full range of stationery: pens, papers, files, notebooks and more.' },
+    { icon: '💰', name: 'Friendly Customer Deals', desc: 'Special packages and loyal customer discounts — we value you!' },
+    { icon: '📝', name: 'Form Filling', desc: 'Assistance with official forms, applications, and government paperwork.' },
+  ];
+
+  const grid = document.getElementById('servicesGrid');
+  const waNumber = '03009706178';
+
+  services.forEach(svc => {
+    const msg = encodeURIComponent(`Hi ABC Stationers! I'm interested in your *${svc.name}* service. Can I get more info?`);
+    const url = `https://wa.me/${waNumber}?text=${msg}`;
+    const card = document.createElement('a');
+    card.href = url;
+    card.target = '_blank';
+    card.rel = 'noopener noreferrer';
+    card.className = 'service-card';
+    card.innerHTML = `
+      <div class="svc-icon">${svc.icon}</div>
+      <div class="svc-name">${svc.name}</div>
+      <div class="svc-desc">${svc.desc}</div>
+      <div class="wa-hint">Tap to ask on WhatsApp</div>
+    `;
+    grid.appendChild(card);
+  });
+
+  // ── Mobile Menu ──
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+
+  // Close mobile menu on scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('mobileMenu').classList.remove('open');
+  });
+</script>
+</body>
+</html>
